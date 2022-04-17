@@ -21,9 +21,10 @@ Plug 'airblade/vim-gitgutter'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'LinArcX/telescope-command-palette.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 " Status
-Plug 'fehawen/sl.vim'
+"Plug 'fehawen/sl.vim'
 
 " Python
 Plug 'psf/black', { 'branch': 'stable' }
@@ -40,6 +41,9 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Snippets
+Plug 'SirVer/ultisnips'
 
 " Initialize plugin system
 call plug#end()
@@ -145,6 +149,7 @@ inoremap PrtSc <Esc>
 " Set theme
 colorscheme sc
 hi Normal ctermbg=NONE guibg=NONE
+hi StatusLine ctermbg=NONE cterm=NONE
 "set notermguicolors
 "highlight Search ctermfg=0
 
@@ -172,7 +177,7 @@ imap jj <Esc>
 " Telescope
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>tt <cmd>Telescope find_files<cr>
+nnoremap <leader>tt <cmd>Telescope file_browser<cr>
 nnoremap <leader>tg <cmd>Telescope live_grep<cr>
 nnoremap <leader>tb <cmd>Telescope buffers<cr>
 nnoremap <leader>th <cmd>Telescope help_tags<cr>
@@ -229,6 +234,7 @@ require('telescope').setup({
 })
 
 require('telescope').load_extension('command_palette')
+require("telescope").load_extension "file_browser"
 EOF
 
 """""""""""""""""""""""""
@@ -261,7 +267,7 @@ require'nvim-treesitter.configs'.setup {
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
     -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
 }
 EOF
@@ -287,7 +293,4 @@ nmap <LocalLeader>. <Plug>RDSendLine
 
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 1/4)<CR>
-
-
-
 
