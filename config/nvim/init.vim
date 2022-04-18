@@ -26,6 +26,9 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Status
 "Plug 'fehawen/sl.vim'
 
+" Sendcode
+Plug 'jalvesaq/vimcmdline'
+
 " Python
 Plug 'psf/black', { 'branch': 'stable' }
 
@@ -294,3 +297,16 @@ nmap <LocalLeader>. <Plug>RDSendLine
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 1/4)<CR>
 
+
+"""""""""""""""""""""""
+" Send code
+
+" vimcmdline mappings
+let cmdline_map_start          = '<LocalLeader>s'
+let cmdline_map_send           = '<Space>.'
+let cmdline_map_send_and_stay  = '<LocalLeader><Space>'
+let cmdline_map_source_fun     = '<LocalLeader>f'
+let cmdline_map_send_paragraph = '<LocalLeader>p'
+let cmdline_map_send_block     = '<LocalLeader>b'
+let cmdline_map_send_motion    = '<LocalLeader>m'
+let cmdline_map_quit           = '<LocalLeader>q'
