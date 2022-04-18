@@ -27,7 +27,7 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 "Plug 'fehawen/sl.vim'
 
 " Sendcode
-Plug 'jalvesaq/vimcmdline'
+Plug 'jpalardy/vim-slime'
 
 " Python
 Plug 'psf/black', { 'branch': 'stable' }
@@ -300,13 +300,6 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 1/4)<CR>
 
 """""""""""""""""""""""
 " Send code
-
-" vimcmdline mappings
-let cmdline_map_start          = '<LocalLeader>s'
-let cmdline_map_send           = '<Space>.'
-let cmdline_map_send_and_stay  = '<LocalLeader><Space>'
-let cmdline_map_source_fun     = '<LocalLeader>f'
-let cmdline_map_send_paragraph = '<LocalLeader>p'
-let cmdline_map_send_block     = '<LocalLeader>b'
-let cmdline_map_send_motion    = '<LocalLeader>m'
-let cmdline_map_quit           = '<LocalLeader>q'
+let g:slime_target = "tmux"
+let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.2"}
+"let g:slime_bracketed_paste = 1
