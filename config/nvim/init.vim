@@ -29,6 +29,9 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 " Sendcode
 Plug 'jpalardy/vim-slime'
 
+" Git
+Plug 'airblade/vim-gitgutter'
+
 " Python
 Plug 'psf/black', { 'branch': 'stable' }
 
@@ -297,9 +300,13 @@ nmap <LocalLeader>. <Plug>RDSendLine
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 1/4)<CR>
 
-
 """""""""""""""""""""""
 " Send code
 let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.2"}
+let g:slime_default_config = {"socket_name": split($TMUX, ","), "target_pane":":.2"}
 "let g:slime_bracketed_paste = 1
+
+""""""""""""""""""""
+" Gitgutter
+
+
