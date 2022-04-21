@@ -17,6 +17,14 @@ call plug#begin('~/.vim/plugged')
 Plug 'fehawen/sc.vim'
 Plug 'airblade/vim-gitgutter'
 
+" CMP
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -31,6 +39,7 @@ Plug 'jpalardy/vim-slime'
 
 " Git
 Plug 'airblade/vim-gitgutter'
+Plug 'mzlogin/vim-markdown-toc'
 
 " Python
 Plug 'psf/black', { 'branch': 'stable' }
@@ -50,6 +59,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Snippets
 Plug 'SirVer/ultisnips'
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 " Initialize plugin system
 call plug#end()
@@ -98,6 +108,7 @@ set expandtab
 set shiftwidth=4
 set autoindent
 set nu
+set number relativenumber
 set lazyredraw
 set nocursorline
 set nocursorcolumn
@@ -138,6 +149,22 @@ imap <ESC>[1;5C <C-o><C-Right>
 nmap <C-h> <C-w>
 cmap <C-h> <C-w>
 imap <C-h> <C-w>
+
+" Splits
+set splitbelow
+set splitright
+nnoremap <leader>j <C-W><C-J>
+nnoremap <leader>k <C-W><C-K>
+nnoremap <leader>l <C-W><C-L>
+nnoremap <leader>h <C-W><C-H>
+
+nnoremap <silent> <c-Up> :resize -2<CR>
+nnoremap <silent> <c-Down> :resize +2<CR>
+nnoremap <silent> <c-left> :vertical resize -2<CR>
+nnoremap <silent> <c-right> :vertical resize +2<CR>
+
+" Save
+nnoremap <silent> <leader>w :update<CR>
 
 "set spell spelllang=en_us
 set spellfile=~/.vim/spell/en.utf.8.add
@@ -303,10 +330,81 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 1/4)<CR>
 """""""""""""""""""""""
 " Send code
 let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": split($TMUX, ","), "target_pane":":.2"}
+let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane":":.2"}
 "let g:slime_bracketed_paste = 1
 
 """"""""""""""""""""
 " Gitgutter
 
 
+" CMP
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      --{ name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require('lspconfig').pyright.setup {
+    capabilities = capabilities
+  }
+EOF
