@@ -2,15 +2,16 @@ window:
   padding:
     x: 15
     y: 15
-  opacity: 0.95
+  opacity: 1
+  decorations: None
 
 font:
   # The normal (roman) font face to use.
   # Style can be specified to pick a specific face.
   normal:
-    family: SF Mono
+    family: Input
     style: Light
-  size: 13
+  size: 9
 
 key_bindings:
   - { key: V,        mods: Control|Shift,       action: Paste                        }
