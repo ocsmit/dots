@@ -17,6 +17,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'fehawen/sc.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'Pocco81/TrueZen.nvim'
+Plug 'cohama/lexima.vim'
 
 " CMP
 Plug 'neovim/nvim-lspconfig'
@@ -61,6 +62,9 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+" cheat.sh
+Plug 'dbeniamine/cheat.sh-vim'
 
 " Initialize plugin system
 call plug#end()
@@ -405,9 +409,15 @@ lua <<EOF
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+
+  -- pyright
   require('lspconfig').pyright.setup {
     capabilities = capabilities
   }
+
+  --
+  require'lspconfig'.ccls.setup{}
+
 EOF
 
 

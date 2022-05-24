@@ -9,9 +9,9 @@ font:
   # The normal (roman) font face to use.
   # Style can be specified to pick a specific face.
   normal:
-    family: Input
+    family: SF Mono
     style: Light
-  size: 9
+  size: 8
 
 key_bindings:
   - { key: V,        mods: Control|Shift,       action: Paste                        }
