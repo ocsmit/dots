@@ -334,8 +334,10 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 1/4)<CR>
 
 """""""""""""""""""""""
 " Send code
-let g:slime_target = "tmux"
-let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane":":.2"}
+    let g:slime_target = "tmux"
+if exists('$TMUX')
+    let g:slime_default_config = {"socket_name": split($TMUX, ",")[0], "target_pane":":.2"}
+endif
 "let g:slime_bracketed_paste = 1
 
 """"""""""""""""""""
@@ -415,8 +417,13 @@ lua <<EOF
     capabilities = capabilities
   }
 
-  --
+  -- Check if OS and load apropriate C lsp
   require'lspconfig'.ccls.setup{}
+  if jit.os == "OSX" then
+      require'lspconfig'.clangd.setup{}
+  else
+      require'lspconfig'.ccls.setup{}
+  end
 
 EOF
 
