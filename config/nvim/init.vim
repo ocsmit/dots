@@ -17,6 +17,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'fehawen/sc.vim'
 Plug 'airblade/vim-gitgutter'
 
+" requires
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
+
 " CMP
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -436,3 +441,11 @@ cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
 cnoremap <C-l> <Right>
 
+
+
+lua << EOF
+require'nvim-tree'.setup {
+}
+EOF
+
+nnoremap <silent> <c-n> :NvimTreeToggle<CR>
