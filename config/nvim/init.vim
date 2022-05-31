@@ -15,11 +15,19 @@ call plug#begin('~/.vim/plugged')
 
 " General
 Plug 'fehawen/sc.vim'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 
 " requires
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
+
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+if has('nvim') || has('patch-8.0.902')
+  Plug 'mhinz/vim-signify'
+else
+  Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+endif
 
 
 " CMP
@@ -43,7 +51,7 @@ Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'jpalardy/vim-slime'
 
 " Git
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 Plug 'mzlogin/vim-markdown-toc'
 
 " Python
@@ -132,6 +140,7 @@ set title
 set path+=**
 set wildmenu
 set wildignore+=**/.git/**
+set scl=yes
 
 
 " Auto resize panes
@@ -181,6 +190,7 @@ hi clear SpellBad
 hi SpellBad cterm=underline
 " Set style for gVim
 hi SpellBad gui=undercurl
+hi Normal guibg=NONE ctermbg=NONE
 set spell
 
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
@@ -190,7 +200,7 @@ inoremap PrtSc <Esc>
 " Set theme
 colorscheme sc
 hi Normal ctermbg=NONE guibg=NONE
-hi StatusLine ctermbg=NONE cterm=NONE
+highlight clear SignColumn
 "set notermguicolors
 "highlight Search ctermfg=0
 
@@ -449,3 +459,10 @@ require'nvim-tree'.setup {
 EOF
 
 nnoremap <silent> <c-n> :NvimTreeToggle<CR>
+
+set nocompatible
+set hidden
+let g:CtrlSpaceDefaultMappingKey = "<C-o> "
+nnoremap <silent><C-p> :CtrlSpace O<CR>
+
+set updatetime=100
