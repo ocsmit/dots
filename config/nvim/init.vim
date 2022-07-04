@@ -19,7 +19,7 @@ Plug 'rmagatti/goto-preview'
 
 
 " requires
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
+"Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 
 if has('nvim') || has('patch-8.0.902')
@@ -379,12 +379,7 @@ lua <<EOF
   }
 
   -- Check if OS and load apropriate C lsp
-  require'lspconfig'.ccls.setup{}
-  if jit.os == "OSX" then
-      require'lspconfig'.clangd.setup{}
-  else
-      require'lspconfig'.ccls.setup{}
-  end
+  require'lspconfig'.clangd.setup{}
 
 EOF
 
