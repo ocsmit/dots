@@ -128,6 +128,13 @@ alias pi="sudo dnf install"
 alias ps="dnf search"
 alias el="exa -l"
 
+# for ZSH
+case "$OSTYPE" in
+  darwin*)
+      export PATH=/opt/homebrew/bin:$PATH
+      alias python="python3"
+    ;;
+esac
 
 ##############################
 # CONFIGS
@@ -154,19 +161,4 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/micromamba/envs/bas/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/micromamba/envs/bas/etc/profile.d/conda.sh" ]; then
-        . "$HOME/micromamba/envs/bas/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/micromamba/envs/bas/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
