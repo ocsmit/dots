@@ -162,3 +162,5 @@ fi
 unset __mamba_setup
 # <<< mamba initialize <<<
 
+alias mm="micromamba"
+alias mmi="micromamba install -c conda-forge"
