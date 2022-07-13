@@ -164,3 +164,6 @@ unset __mamba_setup
 
 alias mm="micromamba"
 alias mmi="micromamba install -c conda-forge"
+
+# Golang
+export PATH=$PATH:/usr/local/go/bin
