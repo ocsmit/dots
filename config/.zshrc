@@ -17,7 +17,7 @@ precmd() {
     }
 }
 autoload -U colors && colors
-PS1="%(?.%(!.#.%F{2};).%F{6}%B;%b%f) %{$reset_color%}% "
+PS1='%1~ %(?.%(!.#.%F{2} ;).%F{6}%B ;%b%f) %{$reset_color%}% '
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -127,6 +127,7 @@ alias svi="sudo nvim"
 alias pi="sudo dnf install"
 alias ps="dnf search"
 alias el="exa -l"
+alias gdf="git diff --stat"
 
 # for ZSH
 case "$OSTYPE" in
@@ -167,3 +168,8 @@ alias mmi="micromamba install -c conda-forge"
 
 # Golang
 export PATH=$PATH:/usr/local/go/bin
+
+# For stuff not suppose to be version controlled
+if [ -e ~/.env_custom ]; then
+  source ~/.env_custom
+fi
