@@ -170,6 +170,6 @@ alias mmi="micromamba install -c conda-forge"
 export PATH=$PATH:/usr/local/go/bin
 
 # For stuff not suppose to be version controlled
-if [ -e ~/.env_custom ]; then
-  source ~/.env_custom
+if [ -e $HOME/.env_custom ]; then
+  source $HOME/.env_custom
 fi
