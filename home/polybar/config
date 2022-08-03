@@ -27,7 +27,7 @@ alert = #026957
 
 
 [bar/main]
-monitor = HDMI-A-0
+#monitor = HDMI-A-0
 width = 100%
 height = 27
 ;offset-x = 1%
@@ -59,9 +59,9 @@ font-3 = DejaVu Sans:pixelsize=20
 
 modules-left = bspwm
 modules-center =
-modules-right = alsa cpu wlan date
+modules-right = alsa memory cpu date
 tray-position = right
-tray-padding = 30
+tray-padding = 10
 ;tray-background = #0063ff
 
 wm-restack = bspwm
@@ -241,7 +241,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "𐧺"
 format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #4bffdc
 label = %percentage_used%%

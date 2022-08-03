@@ -148,6 +148,7 @@ alias gdf="git diff --stat"
 
 export SRC=$HOME/src
 alias cds="cd $SRC"
+alias gst="git status -s"
 
 # for ZSH
 case "$OSTYPE" in
