@@ -31,7 +31,9 @@ zstyle ':vcs_info:git:*' formats '➜  %b'
 setopt PROMPT_SUBST
 
 PS1='
-%1~ %{$fg[yellow]%}% ${vcs_info_msg_0_} %{$reset_color%}% %(?.%(!.#.%F{2} ;).%F{6}%B ;%b%f) %{$reset_color%}% '
+%(?.%(!.#.%F{2} ;).%F{6}%B ;%b%f) %{$reset_color%}% '
+
+RPROMPT='%1~ %{$fg[yellow]%}% ${vcs_info_msg_0_} %{$reset_color%}% '
 
 
 
@@ -142,8 +144,8 @@ alias vi="nvim"
 alias svi="sudo nvim"
 alias pi="sudo dnf install"
 alias ps="dnf search"
-alias ll="exa -l --git"
-alias ls="exa --git"
+#alias ll="exa -l --git"
+#alias ls="exa --git"
 alias gdf="git diff --stat"
 
 export SRC=$HOME/src
@@ -167,7 +169,7 @@ export PATH="${HOME}/bin:$PATH"
 eval "$(direnv hook zsh)"
 
 ################################
-# >>> mamba initialize >>>
+## >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
 export MAMBA_EXE="${HOME}/bin/micromamba";
 export MAMBA_ROOT_PREFIX="${HOME}/micromamba";
@@ -182,7 +184,7 @@ else
     fi
 fi
 unset __mamba_setup
-# <<< mamba initialize <<<
+# <<< mamba initialize <<
 
 alias mm="micromamba"
 alias mmi="micromamba install -c conda-forge"

@@ -60,7 +60,7 @@ Plug 'jalvesaq/Nvim-R', {'branch': 'stable'}
 
 " LaTeX / Pandoc
 Plug 'lervag/vimtex'
-Plug 'conornewton/vim-pandoc-markdown-preview'
+"Plug 'conornewton/vim-pandoc-markdown-preview'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
