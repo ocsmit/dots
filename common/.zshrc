@@ -99,6 +99,7 @@ RPROMPT='%1~ %{$fg[yellow]%}% ${vcs_info_msg_0_} %{$reset_color%}% '
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
+    poetry
     zsh-autosuggestions
     zsh-syntax-highlighting
     fzf-tab
@@ -190,9 +191,11 @@ alias mm="micromamba"
 alias mmi="micromamba install -c conda-forge"
 
 # Golang
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/go/bin
 
 # For stuff not suppose to be version controlled
 if [ -e $HOME/.env_custom ]; then
   source $HOME/.env_custom
 fi
+
+alias pvenv="source `poetry env info --path`/bin/activate"

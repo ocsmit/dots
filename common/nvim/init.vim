@@ -70,6 +70,9 @@ Plug 'SirVer/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 
 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+
 " Initialize plugin system
 call plug#end()
 
@@ -392,10 +395,35 @@ lua <<EOF
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 end
 
+local util = require('lspconfig/util')
+
+local path = util.path
+
+--https://github.com/neovim/nvim-lspconfig/issues/500#issuecomment-877293306
+local function get_python_path(workspace)
+  -- Use activated virtualenv.
+  if vim.env.VIRTUAL_ENV then
+    return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+  end
+
+    local match = vim.fn.glob(path.join(workspace, 'poetry.lock'))
+  if match ~= '' then
+    local venv = vim.fn.trim(vim.fn.system('poetry env info -p'))
+    return path.join(venv, 'bin', 'python')
+  end
+
+  -- Fallback to system Python.
+  return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
+end
+
+
   -- pyright
   require('lspconfig').pyright.setup {
     on_attach=on_attach,
-    capabilities = capabilities
+    capabilities = capabilities,
+    on_init = function(client)
+        client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    end
   }
 
   -- Check if OS and load apropriate C lsp
@@ -406,6 +434,25 @@ end
   require'lspconfig'.r_language_server.setup{
     on_attach = on_attach
   }
+
+  -- go
+  require'lspconfig'.gopls.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+    },
+  },
+  init_options = {
+    usePlaceholders = true,
+  }
+}
 
 EOF
 
@@ -447,4 +494,6 @@ nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
 nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
 " Only set if you have telescope installed
 nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+
+nnoremap <silent> g? <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 

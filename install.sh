@@ -4,18 +4,8 @@
 COMMONDIR="${PWD}/common"
 
 
-while getopts ":h" option; do
-   case $option in
-      h) # Host
-	 HOST=$OPTARG
-         exit;;
-     \?) # Invalid option
-         echo "Error: Invalid option"
-         exit;;
-   esac
-done
 
-HOSTDIR="${PWD}/${HOST}"
+HOSTDIR="${PWD}/$1"
 
 
 ln -sf $COMMONDIR/.zshrc $HOME/.zshrc
